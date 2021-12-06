@@ -3,6 +3,8 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 
+category_url = 'http://books.toscrape.com/catalogue/category/books/default_15/index.html'
+product_url_list = []
 
 def extract_product_data_in_csv():
     url = 'http://books.toscrape.com/catalogue/soumission_998/index.html'
@@ -38,5 +40,35 @@ def extract_product_data_in_csv():
         writer.writerow(columns_name)
         writer.writerow(data)
 
+def check_next_page(self):
+    page = requests.get(self).content
+    soup = BeautifulSoup(page, 'html.parser')
 
-extract_product_data_in_csv()
+    next_exist = soup.find(class_='next')
+    if next_exist:
+        result = ''
+        while result != '/':
+            self, result = self[:-1], self[-1]
+        
+        new_url = self + result + next_exist.a['href']
+
+        return new_url
+
+def create_product_url_list_of_a_category(self):
+    page = requests.get(self).content
+    soup = BeautifulSoup(page, 'html.parser')
+
+    for link in soup.find_all('h3'):
+        product_url = ('http://books.toscrape.com/catalogue' 
+                       + link.find('a').get('href')[8:])
+        product_url_list.append(product_url)
+    
+    new_url = check_next_page(self)
+    if new_url:
+        create_product_url_list_of_a_category(new_url)
+
+    return product_url_list
+
+
+product_url_list = create_product_url_list_of_a_category(category_url)
+extract_product_data_in_csv(product_url_list)
