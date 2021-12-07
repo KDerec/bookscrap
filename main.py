@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 category_url = 'http://books.toscrape.com/catalogue/category/books/default_15/index.html'
 product_url_list = []
 
+home_page = 'https://books.toscrape.com/index.html'
 
 def extract_product_data_in_csv(self):
     os.chdir(os.getcwd() + '\data\csv')
@@ -72,6 +73,20 @@ def create_product_url_list_of_a_category(self):
 
     return product_url_list
 
+def create_category_url_list(self):
+    page = requests.get(self).content
+    soup = BeautifulSoup(page, 'html.parser')
+
+    for link in soup.find(class_='nav nav-list').ul.find_all('li'):
+        category_url = ('http://books.toscrape.com/catalogue' 
+                       + link.find('a').get('href')[9:])
+        category_url_list.append(category_url)
+    
+    return category_url_list
+
+
+category_url_list = []
+category_url_list = create_category_url_list(home_page)
 
 product_url_list = create_product_url_list_of_a_category(category_url)
 extract_product_data_in_csv(product_url_list)
