@@ -29,15 +29,19 @@ def extract_product_data_in_csv(self):
     for url in self:
         page = requests.get(url).content
         soup = BeautifulSoup(page, 'html.parser')
+        table = soup.find(class_='table table-striped')
 
         product_page_url = url
-        universal_product_code = soup.find_all('td')[0].text
         title = soup.h1.text
-        price_including_tax = soup.find_all('td')[3].text.replace('£','')
-        price_excluding_tax = soup.find_all('td')[2].text.replace('£','')
-        number_available = soup.find_all('td')[-2].text
+        universal_product_code = table.find(text='UPC').next_element.text
+        price_including_tax = table.find(text='Price (incl. tax)').next_element
+        price_including_tax = price_including_tax.text.replace('£','')
+        price_excluding_tax = table.find(text='Price (excl. tax)').next_element
+        price_excluding_tax = price_excluding_tax.text.replace('£','')
+        number_available = soup.find(class_='instock availability').text.strip()
         number_available = ''.join(i for i in number_available if i.isdigit())
-        product_description = soup.h2.next_sibling.next_element.next_element.text
+        product_description = soup.head.find('meta', attrs={'name':'description'})
+        product_description = product_description.attrs['content'].strip()
         category = soup.find_all('a')[3].text
         review_rating = soup.find(class_='star-rating')
         review_rating = review_rating.get('class')[1]
