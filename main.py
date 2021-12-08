@@ -7,6 +7,46 @@ path = os.getcwd()
 home_page = 'https://books.toscrape.com/index.html'
 
 
+def create_category_url_list(self):
+    page = requests.get(self).content
+    soup = BeautifulSoup(page, 'html.parser')
+
+    for link in soup.find(class_='nav nav-list').ul.find_all('li'):
+        category_url = ('http://books.toscrape.com/catalogue' 
+                       + link.find('a').get('href')[9:])
+        category_url_list.append(category_url)
+    
+    return category_url_list
+
+def create_product_url_list_of_a_category(self):
+    page = requests.get(self).content
+    soup = BeautifulSoup(page, 'html.parser')
+
+    for link in soup.find_all('h3'):
+        product_url = ('http://books.toscrape.com/catalogue' 
+                       + link.find('a').get('href')[8:])
+        product_url_list.append(product_url)
+    
+    new_url = check_next_page(self)
+    if new_url:
+        create_product_url_list_of_a_category(new_url)
+
+    return product_url_list
+
+def check_next_page(self):
+    page = requests.get(self).content
+    soup = BeautifulSoup(page, 'html.parser')
+
+    next_exist = soup.find(class_='next')
+    if next_exist:
+        result = ''
+        while result != '/':
+            self, result = self[:-1], self[-1]
+        
+        new_url = self + result + next_exist.a['href']
+
+        return new_url
+
 def create_new_csv(self):
     page = requests.get(self).content
     soup = BeautifulSoup(page, 'html.parser')
@@ -63,45 +103,12 @@ def extract_product_data_in_csv(self):
         title = formate_file_name_for_windows(title)
         download_image(image_url, title, category)
 
-def check_next_page(self):
-    page = requests.get(self).content
-    soup = BeautifulSoup(page, 'html.parser')
-
-    next_exist = soup.find(class_='next')
-    if next_exist:
-        result = ''
-        while result != '/':
-            self, result = self[:-1], self[-1]
+def formate_file_name_for_windows(self):
+    self = self.replace("<","").replace(">","").replace(":"," ").replace("«","")
+    self = self.replace("»","").replace("|","").replace("?","").replace("*","")
+    self = self.replace("."," ").replace('"',"").replace('/'," ").rstrip()
         
-        new_url = self + result + next_exist.a['href']
-
-        return new_url
-
-def create_product_url_list_of_a_category(self):
-    page = requests.get(self).content
-    soup = BeautifulSoup(page, 'html.parser')
-
-    for link in soup.find_all('h3'):
-        product_url = ('http://books.toscrape.com/catalogue' 
-                       + link.find('a').get('href')[8:])
-        product_url_list.append(product_url)
-    
-    new_url = check_next_page(self)
-    if new_url:
-        create_product_url_list_of_a_category(new_url)
-
-    return product_url_list
-
-def create_category_url_list(self):
-    page = requests.get(self).content
-    soup = BeautifulSoup(page, 'html.parser')
-
-    for link in soup.find(class_='nav nav-list').ul.find_all('li'):
-        category_url = ('http://books.toscrape.com/catalogue' 
-                       + link.find('a').get('href')[9:])
-        category_url_list.append(category_url)
-    
-    return category_url_list
+    return self
 
 def download_image(image_url, title, category):
     os.chdir(path + '\data\images\\' + category)
@@ -109,10 +116,6 @@ def download_image(image_url, title, category):
     open('{}.jpg'.format(title), 'wb').write(r.content)
     os.chdir(path + '\data\csv')
 
-def formate_file_name_for_windows(self):
-    self = self.replace("<","").replace(">","").replace(":"," ").replace("«","")
-    self = self.replace("»","").replace("|","").replace("?","").replace("*","")
-    self = self.replace("."," ").replace('"',"").replace('/'," ").rstrip()
 
     return self
 
