@@ -107,7 +107,7 @@ def formate_file_name_for_windows(self):
     self = self.replace("<","").replace(">","").replace(":"," ").replace("«","")
     self = self.replace("»","").replace("|","").replace("?","").replace("*","")
     self = self.replace("."," ").replace('"',"").replace('/'," ").rstrip()
-        
+
     return self
 
 def download_image(image_url, title, category):
@@ -117,15 +117,35 @@ def download_image(image_url, title, category):
     os.chdir(path + '\data\csv')
 
 
-    return self
+print('Bienvenue dans l\'application Bookscrap !')
 
-os.chdir(path + '\data\csv')
-category_url_list = []
-category_url_list = create_category_url_list(home_page)
+choix = input('Démarrer l\'extraction des données ? Tapez \'q\' pour quitter.')
 
-for url in category_url_list:
-    product_url_list = []
-    product_url_list = create_product_url_list_of_a_category(url)
-    category = create_new_csv(product_url_list[0])
-    extract_product_data_in_csv(product_url_list)
-    print('Traitement de la catégorie "{}" terminée.'.format(category))
+if choix.upper() != 'Q':
+    print('''
+Vérification des dossiers nécessaires et démarrage de l'extraction des données
+du site books.toscrape.com...
+''')
+    try:
+        os.mkdir(path + '\data')
+        os.mkdir(path + '\data\csv')
+        os.mkdir(path + '\data\images')
+    except FileExistsError:
+        pass
+    else:
+        print('\nDossiers data, csv et images créés.')
+
+    os.chdir(path + '\data\csv')
+    category_url_list = []
+    category_url_list = create_category_url_list(home_page)
+
+    for url in category_url_list:
+        product_url_list = []
+        product_url_list = create_product_url_list_of_a_category(url)
+        category = create_new_csv(product_url_list[0])
+        print('\nTraitement de la catégorie "{}" en cours...'.format(category))
+        extract_product_data_in_csv(product_url_list)
+        print('Traitement de la catégorie "{}" terminé.'.format(category))
+
+input('\nFin du programme.\nAppuyer sur une touche pour quitter :')
+quit()
