@@ -3,8 +3,7 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 
-os.chdir(os.getcwd() + '\data\csv')
-
+path = os.getcwd()
 home_page = 'https://books.toscrape.com/index.html'
 
 
@@ -22,6 +21,11 @@ def create_new_csv(self):
     with open(filename, 'w', encoding="utf-8", newline='') as f:
         writer = csv.writer(f)
         writer.writerow(columns_name)
+    
+    try:
+        os.mkdir(path + '\data\images\\' + category)
+    except FileExistsError:
+        pass   
 
     return category
 
@@ -55,6 +59,9 @@ def extract_product_data_in_csv(self):
         with open(filename, 'a', encoding="utf-8", newline='') as f:
             writer = csv.writer(f)
             writer.writerow(data)
+        
+        title = formate_file_name_for_windows(title)
+        download_image(image_url, title, category)
 
 def check_next_page(self):
     page = requests.get(self).content
@@ -96,7 +103,20 @@ def create_category_url_list(self):
     
     return category_url_list
 
+def download_image(image_url, title, category):
+    os.chdir(path + '\data\images\\' + category)
+    r = requests.get(image_url)
+    open('{}.jpg'.format(title), 'wb').write(r.content)
+    os.chdir(path + '\data\csv')
 
+def formate_file_name_for_windows(self):
+    self = self.replace("<","").replace(">","").replace(":"," ").replace("«","")
+    self = self.replace("»","").replace("|","").replace("?","").replace("*","")
+    self = self.replace("."," ").replace('"',"").replace('/'," ").rstrip()
+
+    return self
+
+os.chdir(path + '\data\csv')
 category_url_list = []
 category_url_list = create_category_url_list(home_page)
 
