@@ -7,9 +7,14 @@ path = os.getcwd()
 home_page = 'https://books.toscrape.com/index.html'
 
 
-def create_category_url_list(self):
+def parse_html(self):
     page = requests.get(self).content
     soup = BeautifulSoup(page, 'html.parser')
+
+    return soup
+
+def create_category_url_list(self):
+    soup = parse_html(self)
 
     for link in soup.find(class_='nav nav-list').ul.find_all('li'):
         category_url = ('http://books.toscrape.com/catalogue' 
@@ -19,8 +24,7 @@ def create_category_url_list(self):
     return category_url_list
 
 def create_product_url_list_of_a_category(self):
-    page = requests.get(self).content
-    soup = BeautifulSoup(page, 'html.parser')
+    soup = parse_html(self)
 
     for link in soup.find_all('h3'):
         product_url = ('http://books.toscrape.com/catalogue' 
@@ -34,8 +38,7 @@ def create_product_url_list_of_a_category(self):
     return product_url_list
 
 def check_next_page(self):
-    page = requests.get(self).content
-    soup = BeautifulSoup(page, 'html.parser')
+    soup = parse_html(self)
 
     next_exist = soup.find(class_='next')
     if next_exist:
@@ -48,8 +51,7 @@ def check_next_page(self):
         return new_url
 
 def create_new_csv(self):
-    page = requests.get(self).content
-    soup = BeautifulSoup(page, 'html.parser')
+    soup = parse_html(self)
     
     category = soup.find_all('a')[3].text
     columns_name = ('product_page_url', 'universal_product_code', 'title', 
@@ -71,8 +73,7 @@ def create_new_csv(self):
 
 def extract_product_data_in_csv(self):
     for url in self:
-        page = requests.get(url).content
-        soup = BeautifulSoup(page, 'html.parser')
+        soup = parse_html(url)
         table = soup.find(class_='table table-striped')
 
         product_page_url = url
