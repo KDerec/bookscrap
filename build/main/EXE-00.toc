@@ -49,7 +49,7 @@
  [],
  False,
  False,
- 1638975358,
+ 1639071224,
  [('run.exe',
    'c:\\users\\derec\\onedrive\\projets\\python\\application\\bookscrap\\env\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])
