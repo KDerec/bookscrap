@@ -3,13 +3,39 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 
+
 path = os.getcwd()
 home_page = 'https://books.toscrape.com/index.html'
 
 
+def test_page(self):
+    while True:
+        try:
+            page = requests.get(self, timeout=6)
+            page.raise_for_status()
+            break
+        except requests.models.HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')
+            decide_to_quit()
+        except requests.exceptions.Timeout:
+            print('The request timed out')
+            decide_to_quit()
+        except Exception as err:
+            print(f'Error occurred: {err}')
+            decide_to_quit()
+
+    return page
+
+def decide_to_quit():
+    choix = input('Recommencer ou quitter ? Tapez \'q\' pour quitter. ')
+    if choix.upper() != 'Q':
+        pass
+    else:
+        quit()
+
 def parse_html(self):
-    page = requests.get(self).content
-    soup = BeautifulSoup(page, 'html.parser')
+    page = test_page(self)
+    soup = BeautifulSoup(page.content, 'html.parser')
 
     return soup
 
@@ -113,8 +139,8 @@ def formate_file_name_for_windows(self):
 
 def download_image(image_url, title, category):
     os.chdir(path + '\data\images\\' + category)
-    r = requests.get(image_url)
-    open('{}.jpg'.format(title), 'wb').write(r.content)
+    images = test_page(image_url)
+    open('{}.jpg'.format(title), 'wb').write(images.content)
     os.chdir(path + '\data\csv')
 
 
