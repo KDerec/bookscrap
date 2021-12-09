@@ -20,7 +20,7 @@ def create_category_url_list(self):
         category_url = ('http://books.toscrape.com/catalogue' 
                        + link.find('a').get('href')[9:])
         category_url_list.append(category_url)
-    
+
     return category_url_list
 
 def create_product_url_list_of_a_category(self):
@@ -138,7 +138,7 @@ du site books.toscrape.com...
 
     os.chdir(path + '\data\csv')
     category_url_list = []
-    category_url_list = create_category_url_list(home_page)
+    category_url_list = set(create_category_url_list(home_page))
 
     for url in category_url_list:
         product_url_list = []
