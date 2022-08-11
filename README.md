@@ -32,7 +32,7 @@ This student project is the #1 of my training.<br>You can follow the next one <a
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-### 🌱 Developped skills
+### 🌱 Developed skills
 - Configure a <b>Python environnement</b>.<br>
 - Apply the basics of <b>Python programming</b>.<br>
 - Use <b>Git</b> and <b>GitHub</b> version control systeme.<br>
