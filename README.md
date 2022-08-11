@@ -7,7 +7,7 @@
 
 <h3>Web scraping</h3>
 <p align="center">
-This student project is the #1 of my training and you can follow the next one <a href="https://github.com/KDerec/chesstournamentmanager">here</a>.
+This student project is the #1 of my training.<br>You can follow the next one <a href="https://github.com/KDerec/chesstournamentmanager">here</a>.
 </p>
 </div>
 
