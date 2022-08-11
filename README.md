@@ -39,7 +39,7 @@ This student project is the #1 of my training.<br>You can follow the next one <a
 - Manage data with the <b>ETL (Extract-Transform-Load)</b> process.<br>
 - Use of <b>BeautifulSoup</b>, <b>request</b> and <b>csv</b> libraries.<br>
 ### 🚀 Project goal
-Create a program to automate the process of <b>extracting, tranform and load data</b> from the online library <a href="http://books.toscrape.com/">Books to Scrape</a>.<br>
+Create a program to automate the process of <b>extracting, transform and load data</b> from the online library <a href="http://books.toscrape.com/">Books to Scrape</a>.<br>
 This library is composed of <b>categories</b> and categories are composed of <b>books</b>.<br>
 For each categories, a <b>csv file is created</b> at data/csv/<i>category_name</i>.csv <b>with the following informations</b> of each books:
 <ul>
