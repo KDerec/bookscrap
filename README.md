@@ -3,11 +3,11 @@
 
 <!-- PROJECT LOGO -->
 <div align="center">
-<a href="https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png"><img src="images/logo.png" alt="Logo" width="80" height="80"></a>
+<a href="https://github.com/KDerec/bookscrap/blob/master/images/logo.png"><img src="images/logo.png" alt="Logo" width="80" height="80"></a>
 
 <h3>Web scraping</h3>
 <p align="center">
-This student project is the #1 of my training.<br>You can follow the next one <a href="https://github.com/KDerec/chesstournamentmanager">here</a>.
+This student project is the #1 of my training.<br>You can follow the next one <a href="https://github.com/KDerec/LearnHome">here</a>.
 </p>
 </div>
 
@@ -129,4 +129,4 @@ Project Link: [https://github.com/KDerec/bookscrap](https://github.com/KDerec/bo
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-<i>This student project is the #1 of my training and you can follow the next one <a href="https://github.com/KDerec/chesstournamentmanager">here</a>.</i>
+<i>This student project is the #1 of my training and you can follow the next one <a href="https://github.com/KDerec/LearnHome">here</a>.</i>
