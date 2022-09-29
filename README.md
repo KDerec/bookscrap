@@ -38,9 +38,16 @@ This student project is the #1 of my training.<br>You can follow the next one <a
 - Use <b>Git</b> and <b>GitHub</b> version control systeme.<br>
 - Manage data with the <b>ETL (Extract-Transform-Load)</b> process.<br>
 - Use of <b>BeautifulSoup</b>, <b>request</b> and <b>csv</b> libraries.<br>
-### 🚀 Project goal
-Create a program to automate the process of <b>extracting, transform and load data</b> from the online library <a href="http://books.toscrape.com/">Books to Scrape</a>.<br>
-This library is composed of <b>categories</b> and categories are composed of <b>books</b>.<br>
+
+### 📖 Scenario
+I am a marketing analyst at **Books Online**, a large online bookstore specializing in used books.  
+As part of my job, I try to **manually** 😔 track used book prices on competitors' websites, but it's **too much work**.  
+My team and I decided to **automate** this laborious task with a program (a scraper) 💡 developed in Python, which is able to **extract pricing information** from other online bookstores.  
+### 🚧 Project goal
+Sam, my team leader, asked me to develop a **beta version** of this system to track book prices at <a href="http://books.toscrape.com/">Books to Scrape</a>, an online book retailer.  
+In this beta version, the program will simply be an **on-demand executable application** aimed at retrieving prices at the time of its execution.  
+### 🚀 Deliverable
+<a href="http://books.toscrape.com/">Books to Scrape</a> library is composed of <b>categories</b> and categories are composed of <b>books</b>.  
 For each categories, a <b>csv file is created</b> at data/csv/<i>category_name</i>.csv <b>with the following informations</b> of each books:
 <ul>
 <li>product_page_url</li>
